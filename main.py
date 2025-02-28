@@ -12,7 +12,7 @@ app = FastAPI()
 # 📌 **Habilitar CORS para permitir solicitudes desde tu app React**
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Puedes especificar ["http://localhost:5173"] en lugar de "*"
+    allow_origins=["http://localhost:5173", "https://caribbean-goods-api.onrender.com"],  # Especificar origenes permitidos
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
