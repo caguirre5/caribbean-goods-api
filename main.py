@@ -4,12 +4,24 @@ from docx import Document
 import shutil
 import json
 import os
-from docx2pdf import convert  # Importar docx2pdf
+import subprocess
+from fastapi import HTTPException
 
 app = FastAPI()
 
 TEMP_DOCX = "temp.docx"
 OUTPUT_PDF = "documento_editado.pdf"
+
+def convert_docx_to_pdf(docx_path, pdf_path):
+    try:
+        subprocess.run(
+            ["libreoffice", "--headless", "--convert-to", "pdf", docx_path],
+            check=True
+        )
+        print("✅ DOCX convertido a PDF correctamente.")
+    except subprocess.CalledProcessError as e:
+        print("❌ Error al convertir DOCX a PDF:", e)
+        raise HTTPException(status_code=500, detail="Error al convertir DOCX a PDF")
 
 @app.post("/edit-docx-to-pdf/")
 async def edit_docx_to_pdf(
@@ -53,7 +65,7 @@ async def edit_docx_to_pdf(
     doc.save(TEMP_DOCX)
 
     # Convertir DOCX a PDF usando docx2pdf
-    convert(TEMP_DOCX, OUTPUT_PDF)
+    convert_docx_to_pdf(TEMP_DOCX, OUTPUT_PDF)
 
     # Devolver el archivo PDF generado
     return FileResponse(OUTPUT_PDF, media_type="application/pdf", filename="documento_editado.pdf")
