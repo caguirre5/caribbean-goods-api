@@ -7,6 +7,10 @@ import os
 import subprocess
 from fastapi import HTTPException
 
+
+libreoffice_check = subprocess.run(["libreoffice", "--version"], capture_output=True, text=True)
+print("LibreOffice Version:", libreoffice_check.stdout)
+
 app = FastAPI()
 
 TEMP_DOCX = "temp.docx"

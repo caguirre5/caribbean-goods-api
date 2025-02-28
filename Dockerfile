@@ -2,7 +2,8 @@
 FROM python:3.10
 
 # Instalar LibreOffice para la conversión de DOCX a PDF
-RUN apt-get update && apt-get install -y libreoffice
+RUN apt-get update && apt-get install -y libreoffice libreoffice-common
+
 
 # Configurar el directorio de trabajo
 WORKDIR /app
