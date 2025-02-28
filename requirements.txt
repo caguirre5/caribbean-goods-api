@@ -4,4 +4,3 @@ python-multipart
 pydantic
 docx2pdf
 python-docx
-json
