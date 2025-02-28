@@ -13,8 +13,8 @@ print("LibreOffice Version:", libreoffice_check.stdout)
 
 app = FastAPI()
 
-TEMP_DOCX = "temp.docx"
-OUTPUT_PDF = "temp.pdf"
+TEMP_DOCX = "CoffeeAgreement.docx"
+OUTPUT_PDF = "CoffeeAgreement.pdf"
 
 def convert_docx_to_pdf(docx_path, pdf_path):
     try:
@@ -72,4 +72,4 @@ async def edit_docx_to_pdf(
     convert_docx_to_pdf(TEMP_DOCX, OUTPUT_PDF)
 
     # Devolver el archivo PDF generado
-    return FileResponse(OUTPUT_PDF, media_type="application/pdf", filename="temp.pdf")
+    return FileResponse(OUTPUT_PDF, media_type="application/pdf", filename="CoffeeAgreement.pdf")
