@@ -72,4 +72,4 @@ async def edit_docx_to_pdf(
     convert_docx_to_pdf(TEMP_DOCX, OUTPUT_PDF)
 
     # Devolver el archivo PDF generado
-    return FileResponse(OUTPUT_PDF, media_type="application/pdf", filename="documento_editado.pdf")
+    return FileResponse(OUTPUT_PDF, media_type="application/pdf", filename="temp.pdf")
