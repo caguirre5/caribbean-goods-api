@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Form, HTTPException
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 from docx import Document
 import json
 import os
@@ -7,6 +8,15 @@ import subprocess
 import requests
 
 app = FastAPI()
+
+# 📌 **Habilitar CORS para permitir solicitudes desde tu app React**
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Puedes especificar ["http://localhost:5173"] en lugar de "*"
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # URL del archivo DOCX en S3
 S3_DOCX_URL = "https://caribbeangoods-content-s3.s3.eu-west-2.amazonaws.com/CoffeeAgreement.docx"
@@ -19,7 +29,7 @@ def download_file_from_s3(url, save_path):
     """ Descarga el archivo desde S3 y lo guarda localmente """
     try:
         response = requests.get(url, stream=True)
-        response.raise_for_status()  # Lanza error si la respuesta no es 200
+        response.raise_for_status()  
         with open(save_path, "wb") as file:
             for chunk in response.iter_content(chunk_size=8192):
                 file.write(chunk)
@@ -45,7 +55,7 @@ async def edit_docx_to_pdf(replacements: str = Form(...)):
     """ Descarga el DOCX desde S3, reemplaza valores y lo convierte a PDF """
     
     try:
-        replacements = json.loads(replacements)  # Convertir JSON a diccionario
+        replacements = json.loads(replacements)  
     except json.JSONDecodeError:
         raise HTTPException(status_code=400, detail="Invalid JSON format in replacements")
 
