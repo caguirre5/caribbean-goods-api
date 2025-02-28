@@ -14,7 +14,7 @@ print("LibreOffice Version:", libreoffice_check.stdout)
 app = FastAPI()
 
 TEMP_DOCX = "temp.docx"
-OUTPUT_PDF = "documento_editado.pdf"
+OUTPUT_PDF = "temp.pdf"
 
 def convert_docx_to_pdf(docx_path, pdf_path):
     try:
